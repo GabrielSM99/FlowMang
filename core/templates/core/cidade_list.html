@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+
+<p>
+  <a href="{% url 'logout' %}">Logout</a>
+</p>
+
+{% block content %}
+<h1>Cidades</h1>
+
+<a href="{% url 'core:cidade_add' %}">+ Adicionar Cidade</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Ações</th>
+  </tr>
+  {% for cidade in cidades %}
+  <tr>
+    <td>{{ cidade.id }}</td>
+    <td>{{ cidade.nome }}</td>
+    <td>
+      <a href="{% url 'core:cidade_edit' cidade.id %}">Editar</a> |
+      <a href="{% url 'core:cidade_delete' cidade.id %}">Excluir</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="3">Nenhuma cidade cadastrado.</td></tr>
+  {% endfor %}
+</table>
+
+<div class="pagination">
+  {% if cidades.has_previous %}
+    <a href="?page=1">&laquo; primeiro</a>
+    <a href="?page={{ cidades.previous_page_number }}">anterior</a>
+  {% endif %}
+
+  <span>Página {{ cidades.number }} de {{ cidades.paginator.num_pages }}</span>
+
+  {% if cidades.has_next %}
+    <a href="?page={{ cidades.next_page_number }}">próxima</a>
+    <a href="?page={{ cidades.paginator.num_pages }}">última &raquo;</a>
+  {% endif %}
+</div>
+{% endblock %}

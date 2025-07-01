@@ -1,0 +1,45 @@
+{% extends "admin/base_site.html" %}
+
+<p>
+  <a href="{% url 'logout' %}">Logout</a>
+</p>
+
+{% block content %}
+<h1>Estados</h1>
+
+<a href="{% url 'core:estado_add' %}">+ Adicionar Estado</a>
+
+<table border="1" cellpadding="5" cellspacing="0">
+  <tr>
+    <th>ID</th>
+    <th>Nome</th>
+    <th>Ações</th>
+  </tr>
+  {% for estado in estados %}
+  <tr>
+    <td>{{ estado.id }}</td>
+    <td>{{ estado.nome }}</td>
+    <td>
+      <a href="{% url 'core:estado_edit' estado.id %}">Editar</a> |
+      <a href="{% url 'core:estado_delete' estado.id %}">Excluir</a>
+    </td>
+  </tr>
+  {% empty %}
+  <tr><td colspan="3">Nenhum estado cadastrado.</td></tr>
+  {% endfor %}
+</table>
+
+<div class="pagination">
+  {% if estados.has_previous %}
+    <a href="?page=1">&laquo; primeiro</a>
+    <a href="?page={{ estados.previous_page_number }}">anterior</a>
+  {% endif %}
+
+  <span>Página {{ estados.number }} de {{ estados.paginator.num_pages }}</span>
+
+  {% if estados.has_next %}
+    <a href="?page={{ estados.next_page_number }}">próxima</a>
+    <a href="?page={{ estados.paginator.num_pages }}">última &raquo;</a>
+  {% endif %}
+</div>
+{% endblock %}

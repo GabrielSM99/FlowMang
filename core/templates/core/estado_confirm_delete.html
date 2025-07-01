@@ -1,0 +1,13 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<h1>Confirmar Exclusão</h1>
+
+<p>Tem certeza que deseja excluir o estado "{{ estado.nome }}"?</p>
+
+<form method="post">
+  {% csrf_token %}
+  <button type="submit">Sim, excluir</button>
+  <a href="{% url 'core:estado_list' %}">Cancelar</a>
+</form>
+{% endblock %}
