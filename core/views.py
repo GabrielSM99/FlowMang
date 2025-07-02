@@ -33,6 +33,8 @@ class CustomLoginView(auth_views.LoginView):
 
         return super().post(request, *args, **kwargs)
 
+def home(request):
+    return render(request, 'core/home.html')
 
 @login_required
 def listar_objetos(request, model, template, context_name):
