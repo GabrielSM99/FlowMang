@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block hide_navbar %}true{% endblock %}
+
+{% block title %}Registrar - FlowMang{% endblock %}
+
+{% block content %}
+<style>
+  .register-left {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
+  .register-logo {
+    max-width: 200px;
+    margin: 20px auto;
+  }
+  .btn-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: #fff;
+    border: none;
+  }
+  .btn-gradient:hover {
+    opacity: 0.9;
+  }
+  .card-register {
+    max-width: 400px;
+    border-radius: 1rem;
+  }
+  @media (max-width: 768px) {
+    .register-left {
+      display: none;
+    }
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+  
+    <div class="col-lg-6 register-left d-flex flex-column justify-content-center align-items-center">
+      <h1 class="display-4 fw-bold mt-3">FlowMang</h1>
+      <p class="lead mt-2">A consulta hídrica moderna, eficiente e segura.</p>
+    </div>
+
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light py-5">
+      <div class="card shadow-lg border-0 card-register w-100">
+        <div class="card-header bg-primary text-white text-center">
+          <h4 class="mb-0">Crie sua Conta</h4>
+        </div>
+        <div class="card-body p-4">
+          <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="mb-3">
+                {{ field.label_tag }}
+                {{ field|add_class:"form-control form-control-lg" }}
+                {% if field.errors %}
+                  <div class="text-danger small">{{ field.errors|striptags }}</div>
+                {% endif %}
+              </div>
+            {% endfor %}
+
+            <button type="submit" class="btn btn-gradient btn-lg w-100 shadow-sm">Registrar</button>
+          </form>
+          <div class="text-center mt-3">
+            <small>Já tem conta? <a href="{% url 'core:login' %}">Entre aqui</a></small>
+          </div>
+        </div>
+        <div class="card-footer text-center small text-muted">
+          &copy; {{ year }} FlowMang. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

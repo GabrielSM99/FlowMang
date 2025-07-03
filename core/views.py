@@ -1,4 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.contrib.auth import login
+from django.contrib import messages
+from .forms import CustomUserCreationForm
 from django.core.paginator import Paginator
 from .models import *
 from .forms import *
@@ -6,6 +9,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from django.conf import settings 
 import requests
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Conta criada com sucesso!")
+            return redirect('core:home')
+    else:
+        form = CustomUserCreationForm()
+    
+    return render(request, 'core/register.html', {'form': form})
 
 class CustomLoginView(auth_views.LoginView):
     template_name = 'core/login.html'
@@ -32,7 +49,7 @@ class CustomLoginView(auth_views.LoginView):
             })
 
         return super().post(request, *args, **kwargs)
-
+    
 def home(request):
     return render(request, 'core/home.html')
 

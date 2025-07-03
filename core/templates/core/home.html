@@ -1,11 +1,13 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Home - FlowMang{% endblock %}
+{% block title %}Bem-vindo ao FlowMang{% endblock %}
 
 {% block content %}
-  <div class="text-center">
-      <h1 class="display-4">Bem-vindo ao FlowMang!</h1>
-      <p class="lead">App PythonAnywhere 🚀</p>
-      <a href="/login/" class="btn btn-primary">Login</a>
+<div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow-lg border-0 rounded-4 p-4 text-center" style="max-width: 600px; width: 100%;">
+    <h1 class="display-4 fw-bold mb-3 text-primary">Bem-vindo ao FlowMang</h1>
+    <p class="lead mb-4 text-muted">Consulte com facilidade e segurança. Plataforma pronta para te atender.</p>
+    <a href="/login/" class="btn btn-lg btn-primary shadow">Comece agora</a>
   </div>
+</div>
 {% endblock %}

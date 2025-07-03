@@ -1,28 +1,118 @@
-{% extends "admin/base_site.html" %}
+{% extends 'core/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block hide_navbar %}true{% endblock %}
+
+{% block title %}Login - FlowMang{% endblock %}
 
 {% block content %}
-  <h1>Login</h1>
 
-  {% if recaptcha_error %}
-  <p style="color:red;">{{ recaptcha_error }}</p>
-  {% endif %}
+<style>
+  .login-left {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: white;
+    text-align: center;
+    padding: 2rem;
+  }
 
-  {% if form.errors %}
-    <p style="color:red;">Usuário ou senha inválidos. Tente novamente.</p>
-  {% endif %}
+  .login-logo {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 20px auto;
+  }
 
-  {% if recaptcha_error %}
-    <p style="color:red;">{{ recaptcha_error }}</p>
-  {% endif %}
+  .btn-gradient {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    color: #fff;
+    border: none;
+  }
+  .btn-gradient:hover {
+    opacity: 0.9;
+  }
 
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+  .card-login {
+    max-width: 400px;
+    border-radius: 1rem;
+  }
 
-    <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+  .card-header-login {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+  }
 
-    <button type="submit">Entrar</button>
-  </form>
+  .card-footer-login {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  }
 
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  @media (max-width: 768px) {
+    .login-left {
+      display: none;
+    }
+  }
+</style>
+
+<div class="container-fluid">
+  <div class="row min-vh-100">
+  
+    <div class="col-lg-6 login-left d-flex flex-column justify-content-center align-items-center">
+      <h1 class="display-4 fw-bold mt-3">FlowMang</h1>
+      <p class="lead mt-2">A consulta hídrica moderna, eficiente e segura.</p>
+    </div>
+
+    <div class="col-lg-6 d-flex align-items-center justify-content-center bg-light py-5">
+      <div class="card shadow-lg border-0 card-login w-100">
+        <div class="card-header bg-primary text-white text-center card-header-login">
+          <h4 class="mb-0">Acesse sua Conta</h4>
+        </div>
+        <div class="card-body p-4">
+
+          {% if recaptcha_error %}
+            <div class="alert alert-danger text-center">
+              {{ recaptcha_error }}
+            </div>
+          {% endif %}
+
+          {% if form.errors %}
+            <div class="alert alert-danger text-center">
+              Usuário ou senha inválidos. Tente novamente.
+            </div>
+          {% endif %}
+
+          <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+            
+            <div class="mb-3">
+              {{ form.username.label_tag }}
+              {{ form.username|add_class:"form-control form-control-lg" }}
+            </div>
+            
+            <div class="mb-3">
+              {{ form.password.label_tag }}
+              {{ form.password|add_class:"form-control form-control-lg" }}
+            </div>
+
+            <div class="mb-3 text-center">
+              <div class="g-recaptcha d-inline-block" data-sitekey="{{ RECAPTCHA_SITE_KEY }}"></div>
+            </div>
+
+            <div class="text-center mt-3">
+               <small>Não tem conta? <a href="{% url 'core:register' %}">Registre-se aqui</a></small>
+            </div>
+
+            <button type="submit" class="btn btn-gradient btn-lg w-100 shadow-sm">Entrar</button>
+          </form>
+
+        </div>
+        <div class="card-footer text-center small text-muted card-footer-login">
+          &copy; {{ year }} FlowMang. Todos os direitos reservados.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
