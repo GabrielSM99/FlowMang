@@ -14,7 +14,9 @@ cd FlowMang
 - Crie o ambiente virtual e ative:
 
 python -m venv venv
+
 venv\Scripts\activate  # Windows
+
 source venv/bin/activate  # macOS/Linux
 
 - Instale as dependências:
@@ -39,6 +41,7 @@ python manage.py runserver
 Acesse: http://127.0.0.1:8000/
 
 ✅ Requisitos
+
 Python 3.10+
 
 Google reCAPTCHA keys (adicione no settings)
