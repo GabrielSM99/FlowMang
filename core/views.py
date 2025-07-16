@@ -10,6 +10,10 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings 
 import requests
 
+from django.shortcuts import redirect
+
+def login_success_view(request):
+    return redirect('https://www.google.com')
 
 def register(request):
     if request.method == 'POST':
@@ -49,6 +53,10 @@ class CustomLoginView(auth_views.LoginView):
             })
 
         return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return 'http://localhost:5173'
+
     
 def home(request):
     return render(request, 'core/home.html')
